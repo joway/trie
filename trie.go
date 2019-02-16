@@ -72,6 +72,17 @@ func (t *Trie) Depth() int {
 	}
 }
 
+func (t *Trie) Forward(word []rune) *Trie {
+	next := t
+	for _, w := range word {
+		next = next.Next[w]
+		if next == nil {
+			break
+		}
+	}
+	return next
+}
+
 func (t *Trie) PrefixSearchString(word string) (string, interface{}) {
 	w, v := t.PrefixSearch([]rune(word))
 	return string(w), v
@@ -107,7 +118,8 @@ func (t *Trie) Prettify() string {
 		}
 		curLine := ""
 		for i, c := range word {
-			curLine += string(c)
+			char := string(c)
+			curLine += char
 			content := ""
 			isFirst := i == 0
 			if strings.HasPrefix(lastWord, curLine) {
@@ -121,8 +133,8 @@ func (t *Trie) Prettify() string {
 					content += "->"
 				}
 
-				content += string(c)
-				lastWord += string(c)
+				content += char
+				lastWord += char
 			}
 
 			output += content

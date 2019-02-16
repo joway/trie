@@ -1,12 +1,13 @@
 package trie
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-func createTrie() *Trie {
-	var dict = map[string]interface{}{
+func createDict() map[string]interface{} {
+	return map[string]interface{}{
 		"/abc": "2",
 		"/a":   "1",
 		"/ac":  "3",
@@ -16,6 +17,10 @@ func createTrie() *Trie {
 		"/ba":  "7",
 		"/cba": "8",
 	}
+}
+
+func createTrie() *Trie {
+	var dict = createDict()
 	t := Build(dict)
 	return t
 }
@@ -39,4 +44,24 @@ func TestTrie_Depth(t *testing.T) {
 	tree := createTrie()
 	depth := tree.Depth()
 	assert.Equal(t, 4, depth)
+}
+
+func TestTrie_Forward(t *testing.T) {
+	tree := createTrie()
+	word := []rune("/abc")
+	got := tree.Forward(word)
+	assert.True(t, got.Key == word[len(word)-1])
+	assert.True(t, got.IsEnd())
+}
+
+func TestTrie_Prettify(t *testing.T) {
+	dict := createBenchDict()
+	tree := Build(dict)
+	output := tree.Prettify()
+	for word := range dict {
+		for _, c := range word {
+			assert.Contains(t, output, string(c))
+		}
+	}
+	fmt.Println(output)
 }
