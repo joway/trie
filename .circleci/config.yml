@@ -9,6 +9,7 @@ jobs:
       - run: ./dep.sh
       - run: env GO111MODULE=on go build
       - run: env GO111MODULE=on go test -race -coverprofile=coverage.txt -covermode=atomic -v ./...
+      - run: env GO111MODULE=on go test -bench=. -run=none
       - run: bash <(curl -s https://codecov.io/bash)
 workflows:
   version: 2

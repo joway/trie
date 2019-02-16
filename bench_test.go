@@ -8,7 +8,6 @@ import (
 )
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const wordLen = 8
 
 func randString(n int) string {
 	b := make([]byte, n)
@@ -36,7 +35,7 @@ func BenchmarkTrie_PrefixSearchString(b *testing.B) {
 	t := Build(dict)
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		word := randString(wordLen)
+		word := "福建龙海市石码"
 		t.PrefixSearchString(word)
 	}
 }
@@ -47,7 +46,16 @@ func BenchmarkTrie_PrefixSearch(b *testing.B) {
 	t := Build(dict)
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		word := randString(wordLen)
+		word := "福建龙海市石码"
 		t.PrefixSearch([]rune(word))
 	}
+}
+
+func BenchmarkBuild(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		dict := createBenchDict()
+		Build(dict)
+	}
+	dict := createBenchDict()
+	Build(dict)
 }
