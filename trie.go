@@ -75,10 +75,10 @@ func (t *Trie) Depth() int {
 func (t *Trie) Forward(word []rune) *Trie {
 	next := t
 	for _, w := range word {
-		next = next.Next[w]
-		if next == nil {
+		if next.Next[w] == nil {
 			break
 		}
+		next = next.Next[w]
 	}
 	return next
 }

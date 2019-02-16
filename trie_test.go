@@ -38,6 +38,10 @@ func TestTrie_PrefixSearch(t *testing.T) {
 	path, val = tree.PrefixSearchString("/bccccc")
 	assert.Equal(t, "/bc", path)
 	assert.Equal(t, "5", val)
+
+	path, val = tree.PrefixSearchString("")
+	assert.Equal(t, "", path)
+	assert.Equal(t, nil, val)
 }
 
 func TestTrie_Depth(t *testing.T) {
@@ -52,6 +56,10 @@ func TestTrie_Forward(t *testing.T) {
 	got := tree.Forward(word)
 	assert.True(t, got.Key == word[len(word)-1])
 	assert.True(t, got.IsEnd())
+
+	got = tree.Forward([]rune("/axxx"))
+	assert.True(t, got.Key == []rune("a")[0])
+	assert.False(t, got.IsEnd())
 }
 
 func TestTrie_Prettify(t *testing.T) {
