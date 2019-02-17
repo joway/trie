@@ -34,5 +34,6 @@ prefix, val := tree.PrefixSearchString("/a")
 ```
 BenchmarkTrie_PrefixSearchString-8       5000000               250 ns/op              32 B/op          1 allocs/op
 BenchmarkTrie_PrefixSearch-8            10000000               150 ns/op               0 B/op          0 allocs/op
+BenchmarkTrie_AddWord-8                 100000000               13.3 ns/op             0 B/op          0 allocs/op
 BenchmarkBuild-8                            2000            755584 ns/op
 ```
