@@ -42,7 +42,7 @@ func BenchmarkBuild(b *testing.B) {
 func BenchmarkTrie_AddWord(b *testing.B) {
 	b.ReportAllocs()
 	dict := createBenchDict()
-	root := New(rootKey, nil)
+	root := NewRoot()
 	count := len(dict)
 	words := make([][]rune, count)
 	for w := range dict {

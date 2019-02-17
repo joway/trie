@@ -25,9 +25,13 @@ func New(key rune, value interface{}) *Trie {
 	}
 }
 
+func NewRoot() *Trie {
+	return New(rootKey, nil)
+}
+
 // Build build a new Trie from a map
 func Build(dict map[string]interface{}) *Trie {
-	root := New(rootKey, nil)
+	root := NewRoot()
 	for w, v := range dict {
 		root.AddWord([]rune(w), v)
 	}
