@@ -15,7 +15,7 @@ type Trie struct {
 	Next map[rune]*Trie
 }
 
-// Create a new Trie Node
+// New create a Trie Node
 func New(key rune, value interface{}) *Trie {
 	return &Trie{
 		Key:   key,
@@ -24,7 +24,7 @@ func New(key rune, value interface{}) *Trie {
 	}
 }
 
-// Build a new Trie from a map
+// Build build a new Trie from a map
 func Build(dict map[string]interface{}) *Trie {
 	root := New(rootKey, nil)
 	for w, v := range dict {
@@ -34,17 +34,17 @@ func Build(dict map[string]interface{}) *Trie {
 	return root
 }
 
-// Does trie has next nodes
+// IsEnd check is the end of the trie
 func (t *Trie) IsEnd() bool {
 	return len(t.Next) == 0
 }
 
-// Does trie is the root node
+// IsRoot check is the root of the trie
 func (t *Trie) IsRoot() bool {
 	return t.Key == rootKey
 }
 
-// Add word to trie
+// AddWord add a word into the trie
 func (t *Trie) AddWord(word []rune, value interface{}) {
 	if len(word) == 0 {
 		return
@@ -62,7 +62,7 @@ func (t *Trie) AddWord(word []rune, value interface{}) {
 	next.AddWord(word[1:], value)
 }
 
-// Depth of trie
+// Depth get the depth of the trie
 func (t *Trie) Depth() int {
 	maxDepth := 0
 	for _, child := range t.Next {
@@ -78,7 +78,7 @@ func (t *Trie) Depth() int {
 	}
 }
 
-// Forward by word and get the match trie node
+// Forward get the match trie node from word
 func (t *Trie) Forward(word []rune) *Trie {
 	next := t
 	for _, w := range word {
@@ -90,13 +90,13 @@ func (t *Trie) Forward(word []rune) *Trie {
 	return next
 }
 
-// PrefixSearch by a string word
+// PrefixSearchString prefix search by a string word
 func (t *Trie) PrefixSearchString(word string) (string, interface{}) {
 	w, v := t.PrefixSearch([]rune(word))
 	return string(w), v
 }
 
-// PrefixSearch by a []rune word
+// PrefixSearch prefix search by a []rune word
 func (t *Trie) PrefixSearch(word []rune) ([]rune, interface{}) {
 	if len(word) == 0 {
 		return nil, nil
@@ -117,7 +117,7 @@ func (t *Trie) PrefixSearch(word []rune) ([]rune, interface{}) {
 	return hits, val
 }
 
-// Get the prettify output
+// Prettify get the prettify graph of the trie
 func (t *Trie) Prettify() string {
 	words := extractWords(t)
 	output := ""
