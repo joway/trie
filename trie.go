@@ -92,11 +92,6 @@ func (t *Trie) PrefixSearchString(word string) (string, interface{}) {
 
 // PrefixSearch prefix search by a []rune word
 func (t *Trie) PrefixSearch(word []rune) ([]rune, interface{}) {
-	wordCount := len(word)
-	if wordCount == 0 {
-		return nil, nil
-	}
-
 	prefixIndex := -1
 	var val interface{}
 	next := t
