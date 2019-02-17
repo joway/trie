@@ -1,6 +1,7 @@
 package trie
 
 import (
+	dtrie "github.com/derekparker/trie"
 	"io/ioutil"
 	"math/rand"
 	"strings"
@@ -29,6 +30,30 @@ func createBenchDict() map[string]interface{} {
 	return dict
 }
 
+func BenchmarkBuild(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		dict := createBenchDict()
+		Build(dict)
+	}
+}
+
+func BenchmarkTrie_AddWord(b *testing.B) {
+	b.ReportAllocs()
+	dict := createBenchDict()
+	root := New(rootKey, nil)
+	count := len(dict)
+	words := make([][]rune, count)
+	for w := range dict {
+		words = append(words, []rune(w))
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		root.AddWord(words[i%count], "xxx")
+	}
+}
+
 func BenchmarkTrie_PrefixSearchString(b *testing.B) {
 	b.ReportAllocs()
 	dict := createBenchDict()
@@ -51,26 +76,31 @@ func BenchmarkTrie_PrefixSearch(b *testing.B) {
 	}
 }
 
-func BenchmarkTrie_AddWord(b *testing.B) {
+func BenchmarkTrie_AddWord_DTrie(b *testing.B) {
 	b.ReportAllocs()
+	root := dtrie.New()
 	dict := createBenchDict()
-	root := New(rootKey, nil)
 	count := len(dict)
-	words := make([][]rune, count)
+	words := make([]string, count)
 	for w := range dict {
-		words = append(words, []rune(w))
+		words = append(words, w)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		root.AddWord(words[i%count], "xxx")
+		root.Add(words[i%count], "xxx")
 	}
 }
 
-func BenchmarkBuild(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		dict := createBenchDict()
-		Build(dict)
-	}
+func BenchmarkTrie_PrefixSearchString_DTrie(b *testing.B) {
+	b.ReportAllocs()
+	root := dtrie.New()
 	dict := createBenchDict()
-	Build(dict)
+	for word := range dict {
+		root.Add(word, "x")
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		word := "福建龙海市石码"
+		root.PrefixSearch(word)
+	}
 }

@@ -37,3 +37,12 @@ BenchmarkTrie_PrefixSearch-8            10000000               150 ns/op        
 BenchmarkTrie_AddWord-8                 100000000               13.3 ns/op             0 B/op          0 allocs/op
 BenchmarkBuild-8                            2000            755584 ns/op
 ```
+
+### Benchmark Comparison
+
+[https://github.com/derekparker/trie](https://github.com/derekparker/trie) 
+
+```
+BenchmarkTrie_AddWord_DTrie-8                   20000000               108 ns/op             112 B/op          2 allocs/op
+BenchmarkTrie_PrefixSearchString_DTrie-8         2000000               732 ns/op             160 B/op          9 allocs/op
+```
