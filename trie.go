@@ -33,7 +33,7 @@ func NewRoot() *Trie {
 func Build(dict map[string]interface{}) *Trie {
 	root := NewRoot()
 	for w, v := range dict {
-		root.AddWord([]rune(w), v)
+		root.AddWordString(w, v)
 	}
 
 	return root
@@ -59,6 +59,11 @@ func (t *Trie) AddWord(word []rune, value interface{}) {
 		parent = parent.Next[c]
 	}
 	parent.Value = value
+}
+
+// AddWordString add a string word into the trie
+func (t *Trie) AddWordString(word string, value interface{}) {
+	t.AddWord([]rune(word), value)
 }
 
 // Depth get the depth of the trie
