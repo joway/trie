@@ -6,6 +6,8 @@
 
 ## Usage
 
+### Prefix Search
+
 ```go
 import "github.com/joway/trie"
 
