@@ -116,17 +116,17 @@ func (t *Trie) Prettify() string {
 	words := extractWords(t)
 	output := ""
 	lastWord := ""
-	for index, word := range words[1:] {
+	for index, word := range words {
 		if index > 0 {
 			lastWord = words[index-1]
 		}
-		curLine := ""
+		curWord := ""
 		for i, c := range word {
 			char := string(c)
-			curLine += char
+			curWord += char
 			content := ""
 			isFirst := i == 0
-			if strings.HasPrefix(lastWord, curLine) {
+			if strings.HasPrefix(lastWord, curWord) {
 				spaceCount := 2
 				if isFirst {
 					spaceCount = 0

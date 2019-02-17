@@ -42,6 +42,8 @@ func TestTrie_PrefixSearch(t *testing.T) {
 	path, val = tree.PrefixSearchString("")
 	assert.Equal(t, "", path)
 	assert.Equal(t, nil, val)
+
+	fmt.Println(tree.Prettify())
 }
 
 func TestTrie_Depth(t *testing.T) {
@@ -71,5 +73,4 @@ func TestTrie_Prettify(t *testing.T) {
 			assert.Contains(t, output, string(c))
 		}
 	}
-	fmt.Println(output)
 }

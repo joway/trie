@@ -25,6 +25,21 @@ tree := trie.Build(dict)
 prefix, val := tree.PrefixSearchString("/a")
 ```
 
+### Prettify Output
+
+```go
+output := tree.Prettify()
+fmt.Println(output)
+```
+
+```
+*->/->a->b->c
+||  |  ->c
+||  ->b->a
+||  |  ->c->a
+||  ->c->b->a
+```
+
 ## Document
 
 [GoDoc](https://godoc.org/github.com/joway/trie)
