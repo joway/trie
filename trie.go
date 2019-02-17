@@ -8,6 +8,7 @@ import (
 
 var rootKey rune = -1
 
+// Trie is the trie node struct
 type Trie struct {
 	Key   rune
 	Value interface{}
@@ -73,9 +74,8 @@ func (t *Trie) Depth() int {
 	}
 	if t.IsRoot() {
 		return maxDepth
-	} else {
-		return maxDepth + 1
 	}
+	return maxDepth + 1
 }
 
 // Forward get the match trie node from word
@@ -98,23 +98,28 @@ func (t *Trie) PrefixSearchString(word string) (string, interface{}) {
 
 // PrefixSearch prefix search by a []rune word
 func (t *Trie) PrefixSearch(word []rune) ([]rune, interface{}) {
-	if len(word) == 0 {
+	wordCount := len(word)
+	if wordCount == 0 {
 		return nil, nil
 	}
 
-	hits := make([]rune, 0)
-	var val interface{} = nil
+	prefixIndex := -1
+	var val interface{}
 	next := t
-	for _, w := range word {
+	for i, w := range word {
 		next = next.Next[w]
 		if next == nil {
 			break
 		}
-		hits = append(hits, w)
+		prefixIndex = i
 		val = next.Value
 	}
 
-	return hits, val
+	if prefixIndex < 0 {
+		return []rune{}, nil
+	}
+
+	return word[0 : prefixIndex+1], val
 }
 
 // Prettify get the prettify graph of the trie

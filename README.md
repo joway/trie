@@ -21,12 +21,18 @@ dict := map[string]interface{}{
 }
 
 tree := trie.Build(dict)
+
 prefix, val := tree.PrefixSearchString("/a")
 ```
+
+## Document
+
+[GoDoc](https://godoc.org/github.com/joway/trie)
+
 ## Benchmark
 
 ```
-BenchmarkTrie_PrefixSearchString-8       5000000               362 ns/op              88 B/op          4 allocs/op
-BenchmarkTrie_PrefixSearch-8             5000000               255 ns/op              56 B/op          3 allocs/op
-BenchmarkBuild-8                            2000            827605 ns/op
+BenchmarkTrie_PrefixSearchString-8       5000000               250 ns/op              32 B/op          1 allocs/op
+BenchmarkTrie_PrefixSearch-8            10000000               150 ns/op               0 B/op          0 allocs/op
+BenchmarkBuild-8                            2000            755584 ns/op
 ```
