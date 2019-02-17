@@ -47,20 +47,14 @@ func (t *Trie) IsRoot() bool {
 
 // AddWord add a word into the trie
 func (t *Trie) AddWord(word []rune, value interface{}) {
-	if len(word) == 0 {
-		return
+	parent := t
+	for _, c := range word {
+		if parent.Next[c] == nil {
+			parent.Next[c] = New(c, nil)
+		}
+		parent = parent.Next[c]
 	}
-	c := word[0]
-	next := t.Next[c]
-	if next == nil {
-		next = New(c, nil)
-		t.Next[c] = next
-	}
-	if len(word) == 1 {
-		next.Value = value
-	}
-
-	next.AddWord(word[1:], value)
+	parent.Value = value
 }
 
 // Depth get the depth of the trie

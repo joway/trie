@@ -30,10 +30,10 @@ func createBenchDict() map[string]interface{} {
 }
 
 func BenchmarkTrie_PrefixSearchString(b *testing.B) {
+	b.ReportAllocs()
 	dict := createBenchDict()
 	b.ResetTimer()
 	t := Build(dict)
-	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		word := "福建龙海市石码"
 		t.PrefixSearchString(word)
@@ -41,13 +41,28 @@ func BenchmarkTrie_PrefixSearchString(b *testing.B) {
 }
 
 func BenchmarkTrie_PrefixSearch(b *testing.B) {
+	b.ReportAllocs()
 	dict := createBenchDict()
 	b.ResetTimer()
 	t := Build(dict)
-	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		word := "福建龙海市石码"
 		t.PrefixSearch([]rune(word))
+	}
+}
+
+func BenchmarkTrie_AddWord(b *testing.B) {
+	b.ReportAllocs()
+	dict := createBenchDict()
+	root := New(rootKey, nil)
+	count := len(dict)
+	words := make([][]rune, count)
+	for w := range dict {
+		words = append(words, []rune(w))
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		root.AddWord(words[i%count], "xxx")
 	}
 }
 
